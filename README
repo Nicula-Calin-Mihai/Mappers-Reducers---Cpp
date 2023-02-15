@@ -1,0 +1,54 @@
+Nicula Calin-Mihai 334CB
+
+Incepem logica din main:
+    Am preluat argumentele din argv
+    Definesc o bariera care trece dupa toate threads (M + R)
+    Un mutex pentru a fi prelucrarea fisierelor dinamica
+
+    Citirea din fisierul principal a numarului de fisiere
+    Apoi citesc pe rand fiecare fisier si le asez in functie de numarul
+    de pe prima linie a fiecaruia, asta reprezentand marimea fisierului
+    Sortez in acest mod descrescator pentru a fi cat mai eficienta prelucrarea
+    dinamica
+    Am folosit o structura pentru fisiere si dim, la care renunt dupa algoritm
+    si raman doar cu fisierele sortate asa cum trebuie
+
+    Creez thread-urile
+    Acum trebuie sa intelegem structurile
+    mapper si reducer impart o structura 'rets' in care se pune rezultatul
+    de la mapper si trebuie sa fie preluat de reducer
+    rets este un vector de vector de Set de Int ptc
+    primul vector reprezinta Mapper-ul care a muncit acolo,
+    al doilea reprezinta puterea perfecta,
+    iar Set-ul este pentru a nu aparea duplicate
+    Acest transfer se face prin pointarea catre aceeasi zone de memorie de
+    catre fiecare
+    De asemenea bariera este la comun ptc trebuie sa fie aceeasi bariera ca sa
+    poata ajunge M si R
+    Restul elementelor sunt specifice fiecarui tip de prelucrare
+
+    Am introdus fiecarui Mapper si Reducer datele corespunzatoare inainte
+    de apelul de creare
+
+    Acum o sa terminam repede cu main-ul ca apoi sa vedem ce fac functiile
+
+    Apelez join-urile cu rezultatul nullptr ptc n am nevoie sa mi intoarca nimic
+    Distrug si inchid ce mai e de oprit, gata main-ul
+
+    Acum la functii:
+    - Mapper: Citirea dinamica o realizez prin a citi, iar apoi
+      a incrementa indexul pe rand de fiecare thread disponibil
+              Dupa aceea verific in ce multime de puteri se afla
+              numarul citit de la thread-ul actual, si l pun corespunztor
+              cu ajutorul algoritmului lui Newton
+              Las sa astepte thread-urile pana cand sunt toate gata
+    - Reducer: am zis mai sus ca pana cand sunt toate gata, deoarece la reducer
+       n are ce sa astepte ptc ele ajung la bariera direct cum intra in functie
+               Pentru a nu mai exista dubluri folosesc un set in care adaug pe
+               rand fiecare numar de la puterea corespunzatoare si de la
+               fiecare mapper in parte, deoarece venind de la mappers dif
+               este posibil sa fi gasit aceeasi valoare
+               dupa bag creez fisierele de iesire si gata tema
+
+
+
